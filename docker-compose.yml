@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    ports:
+      - "3002:3008"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: payments
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./src/payments/infrastructure/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5673:5672"
+      - "15673:15672"
