@@ -1,5 +1,9 @@
 
-# Payments Platform API REST desenvolvida em **Node.js/NestJS** para gerenciar o ciclo de vida de cobranças financeiras, com suporte a **PIX** e **Cartão de Crédito**. Integração com **Mercado Pago** para processamento de transações com cartão, incluindo webhook para atualização automática de status. ## Funcionalidades - Criar pagamento (PIX ou Cartão) - Atualizar status de pagamento - Buscar pagamento por ID - Listar pagamentos com filtros (CPF, método) - Deletar pagamento - Receber notificações do Mercado Pago via webhook ## Tecnologias - [NestJS](https://nestjs.com/) - [PostgreSQL](https://www.postgresql.org/) - [Mercado Pago](https://www.mercadopago.com.br/) - Docker & Docker Compose - Clean Architecture + Testes com Jest
+# Payments Platform API REST desenvolvida em **Node.js/NestJS** para gerenciar o ciclo de vida de cobranças financeiras, com suporte a **PIX** e **Cartão de Crédito**. 
+
+Integração com **Mercado Pago** para processamento de transações com cartão, incluindo webhook para atualização automática de status. ## Funcionalidades - Criar pagamento (PIX ou Cartão) - Atualizar status de pagamento - Buscar pagamento por ID - Listar pagamentos com filtros (CPF, método) - Deletar pagamento - Receber notificações do Mercado Pago via webhook ## Tecnologias - [NestJS](https://nestjs.com/) - [PostgreSQL](https://www.postgresql.org/) - [Mercado Pago](https://www.mercadopago.com.br/) - Docker & Docker Compose - Clean Architecture + Testes com Jest
+
+
 📂 O que foi desenvolvido seguindo o teste técnico
 1. Endpoints REST
     • POST /api/payment → cria um pagamento (PIX ou Cartão). 
@@ -66,121 +70,6 @@ Perfeito, Antonio 👌
 Vou listar todos os endpoints da API de pagamentos que você implementou, com exemplos de requisição e resposta. Assim você tem um guia único para testar e documentar.
 
 📂 Endpoints da API
-1. Criar pagamento
-POST /api/payment
-Body (PIX):
-{
-  "cpf": "19119119100",
-  "description": "Pagamento via PIX",
-  "amount": 50,
-  "paymentMethod": "PIX"
-}
-Body (Cartão):
-{
-  "cpf": "23345678899",
-  "description": "Pagamento Cartão",
-  "amount": 299,
-  "paymentMethod": "CREDIT_CARD"
-}
-Resposta (PIX):
-{
-  "id": "uuid",
-  "cpf": "19119119100",
-  "description": "Pagamento via PIX",
-  "amount": 50,
-  "paymentMethod": "PIX",
-  "status": "PENDING",
-  "createdAt": "2026-02-02T02:29:05.677Z",
-  "checkoutUrl": null
-}
-Resposta (Cartão):
-{
-  "id": "uuid",
-  "cpf": "23345678899",
-  "description": "Pagamento Cartão",
-  "amount": 299,
-  "paymentMethod": "CREDIT_CARD",
-  "status": "PENDING",
-  "createdAt": "2026-02-02T02:38:20.337Z",
-  "checkoutUrl": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=..."
-}
-
-2. Atualizar pagamento
-PUT /api/payment/:id
-Body:
-{
-  "status": "APPROVED"
-}
-Resposta:
-{
-  "message": "Pagamento atualizado com sucesso",
-  "id": "uuid",
-  "status": "APPROVED"
-}
-
-3. Buscar pagamento por ID
-GET /api/payment/:id
-Resposta:
-{
-  "id": "uuid",
-  "cpf": "23345678899",
-  "description": "Pagamento Cartão",
-  "amount": "299.00",
-  "paymentMethod": "CREDIT_CARD",
-  "status": "PENDING",
-  "createdAt": "2026-02-02T02:12:12.835Z"
-}
-
-4. Listar pagamentos
-GET /api/payment
-Exemplo com filtros:
-GET /api/payment?cpf=23345678899&paymentMethod=CREDIT_CARD
-Resposta:
-[
-  {
-    "id": "uuid",
-    "cpf": "23345678899",
-    "description": "Pagamento Cartão",
-    "amount": "299.00",
-    "paymentMethod": "CREDIT_CARD",
-    "status": "APPROVED",
-    "createdAt": "2026-02-02T02:30:40.702Z"
-  },
-  {
-    "id": "uuid",
-    "cpf": "19119119100",
-    "description": "Pagamento via PIX",
-    "amount": "50.00",
-    "paymentMethod": "PIX",
-    "status": "PENDING",
-    "createdAt": "2026-02-02T02:29:05.677Z"
-  }
-]
-
-5. Deletar pagamento
-DELETE /api/payment/:id
-Resposta:
-{
-  "message": "Pagamento deletado com sucesso",
-  "id": "uuid",
-  "deletedAt": "2026-02-02T00:17:12.262Z"
-}
-
-6. Webhook Mercado Pago
-POST /api/mercadopago/webhook
-Body (simulação):
-{
-  "data": {
-    "external_reference": "uuid-do-pagamento",
-    "status": "approved"
-  }
-}
-Resposta:
-{
-  "message": "Pagamento atualizado com sucesso",
-  "id": "uuid-do-pagamento",
-  "status": "PAID"
-}
 
 🚀 Resumo
     • POST /api/payment → cria pagamento (PIX ou Cartão). 
